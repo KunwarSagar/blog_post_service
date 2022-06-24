@@ -38,6 +38,20 @@ public class PostController {
         }
     }
 
+    @GetMapping("/{postId}")
+    public ResponseEntity<?> getPost(@PathVariable Long postId){
+        try {
+            Post post = postService.getPost(postId);
+            if(post != null){
+                return new ResponseEntity<>(post, HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>(new PostNotFoundException("Post by id "+postId+" not found").getMessage(), HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PostMapping("")
     ResponseEntity<?> addPost(@Valid @RequestBody PostDTO postDTO){
         Post post = postMapper.PostDtoToPost(postDTO);

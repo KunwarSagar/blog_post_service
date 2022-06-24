@@ -34,6 +34,20 @@ public class PostServiceImpl implements PostService {
     }
 
     /**
+     * Get single post by id
+     * @param postId
+     * @return
+     */
+    @Override
+    public Post getPost(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalStateException(
+                        "Post with id "+ postId + " doesn't exist"
+                ));
+        return post;
+    }
+
+    /**
      * Save post
      * @param post
      * @return saved post
